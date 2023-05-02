@@ -17,3 +17,89 @@ function getValidLetterGuess() {
   }
   return letter.toLowerCase()
 }
+
+function createQuestion(){
+  return dictionary[Math.floor(Math.random()*dictionary.length)];
+}
+
+function flagCreator(size){
+  let flags = new Array(size);
+  flags = flags.fill("_", 0, size);
+  return flags;
+}
+
+function showGuessed(arr = []){
+  console.log(`Guessed Letters : ${arr.join(" ")}`);
+}
+
+function showHP(hp = 0){
+  console.log(`You have ${hp} guesses remaining`);
+}
+
+function showFlags(arr = []){
+  console.log(`${arr.join(' ')}`);
+}
+
+function winChecker(arr = []){
+  let result = true;
+  for(let char of arr){
+    if(char == "_"){
+      result = false;
+      break;
+    }
+  }
+  return result;
+}
+
+function main(){
+  /** declare variables */
+  let hp = 6;
+  let guessedLetter = [];
+  let question = createQuestion();
+  question = question.split('');
+  let flags = flagCreator(question.length);
+  
+  /** input session */
+  while(hp>0){
+    /** declare flag var */
+    let flagFound = false;
+    
+    /** show status */
+    showGuessed(guessedLetter);
+    showHP(hp);
+    
+    /** store letters */
+    guessedLetter.push(getValidLetterGuess());
+
+    /** validating letters */
+    for(let index = 0; index < question.length; index++){
+      if(question[index] == guessedLetter[guessedLetter.length-1]){
+        if(flags[index] == "_"){
+          flags[index] = guessedLetter[guessedLetter.length - 1];
+          flagFound = true;
+          break;
+        }
+      }  
+    }
+
+    /** show result */
+    showFlags(flags);
+
+    /** chk win or not */
+    if(flagFound == true){
+      if(winChecker(flags)){
+        console.log(`You win! You took blah`);
+        break;
+      }
+      continue;
+    }
+
+    /** incorrect guessing, lose life */
+    --hp;
+  }
+
+  console.log(`Answer is ${question.join('')}`);
+
+}
+
+main();
