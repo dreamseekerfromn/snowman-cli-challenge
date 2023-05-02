@@ -17,29 +17,54 @@ function getValidLetterGuess() {
   }
   return letter.toLowerCase()
 }
-
+/**
+ * a modulized part for choosing random word 
+ * @returns {string} - return a word that randomly chosen in [dictionary]
+ */
 function createQuestion(){
   return dictionary[Math.floor(Math.random()*dictionary.length)];
 }
 
-function flagCreator(size){
+/**
+ * creating & filling an array w/ "_"
+ * @param {int} size - a length of the word
+ * @returns {string[]} - will be return same size of questioned word.
+ */
+function flagCreator(size = 0){
   let flags = new Array(size);
   flags = flags.fill("_", 0, size);
   return flags;
 }
 
+/**
+ * print out function for all of guessed letters
+ * @param {string []} arr - a letter container that the player guessed
+ */
 function showGuessed(arr = []){
   console.log(`Guessed Letters : ${arr.join(" ")}`);
 }
 
+/**
+ * printing out the life point remaining
+ * @param {number} hp - a life point remaining 
+ */
 function showHP(hp = 0){
   console.log(`You have ${hp} guesses remaining`);
 }
 
+/**
+ * printing out the discovered letters
+ * @param {string[]} arr - a string array that stores all the discovered letters
+ */
 function showFlags(arr = []){
   console.log(`${arr.join(' ')}`);
 }
 
+/**
+ * a function to validate win
+ * @param {string[]} arr - a string array that stores all the discovered letters
+ * @returns {boolean} - if the player win, return true.
+ */
 function winChecker(arr = []){
   let result = true;
   for(let char of arr){
